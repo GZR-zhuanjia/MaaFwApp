@@ -40,6 +40,7 @@ import com.aliothmoon.maafw.project.isRemoteUrl
 import com.aliothmoon.maafw.project.normalizeProjectPath
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
+import io.noties.markwon.MarkwonConfiguration
 import io.noties.markwon.MarkwonVisitor
 import io.noties.markwon.SpannableBuilder
 import io.noties.markwon.core.MarkwonTheme
@@ -212,6 +213,10 @@ private fun buildMarkwon(
     .usePlugin(LinkifyPlugin.create())
     .usePlugin(StrikethroughPlugin.create())
     .usePlugin(object : AbstractMarkwonPlugin() {
+        override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
+            builder.imageSizeResolver(DensityAwareImageSizeResolver(density))
+        }
+
         // 默认主题偏「文档」：粗黑大圆点、24dp 缩进、带下划线的链接、标题下划线，
         // 和 app 里其余文字放一起很跳；收成 Material 的样子
         override fun configureTheme(builder: MarkwonTheme.Builder) {
